@@ -9,7 +9,7 @@ class ActivityEntity extends StatelessWidget {
     // TODO: implement build
     return Container(
       child: Text(
-          "id:" + _activity.getID().toString() + " name: " + _activity.name),
-    color: Colors.orange[600],padding: EdgeInsets.all(10.0),margin: EdgeInsets.all(10.0),);
+          "id:" + _activity.getID().toString() + " name: " + _activity.name,style: Theme.of(context).textTheme.body1,),
+    color: Theme.of(context).primaryColor,padding: EdgeInsets.all(10.0),margin: EdgeInsets.all(10.0),);
   }
 }

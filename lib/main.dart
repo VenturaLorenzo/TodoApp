@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'themes.dart';
 import 'activity_manager.dart';
+import 'style.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,18 +11,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'TODO app',
-        theme: ThemeData(
-          primarySwatch: Colors.orange,
-        ),
+        theme: ThemeGenerator.buildNormalTheme(),
         home: Scaffold(
           appBar: AppBar(
             title: Text("TODO app"),
             centerTitle: true,
-            elevation: 10,actions: <Widget>[Icon(Icons.ac_unit)],
+            elevation: 10,
+            actions: <Widget>[Icon(Icons.ac_unit)],
           ),
-          body: 
-           ActivityManager(),
-          
+          body: ActivityManager(),
         ));
   }
 }
