@@ -42,7 +42,7 @@ class DatabaseHelper {
   Future _onCreate(Database db, int version) async {
     await db.execute('''
           CREATE TABLE $table (
-            $columnId INTEGER PRIMARY KEY,
+            $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
             $columnName TEXT NOT NULL
           )
           ''');
@@ -79,7 +79,10 @@ class DatabaseHelper {
     int id = row[columnId];
     return await db.update(table, row, where: '$columnId = ?', whereArgs: [id]);
   }
-
+ Future<int> deleteAll() async {
+    Database db = await instance.database;
+    return await db.delete(table);
+  }
   // Deletes the row specified by the id. The number of affected rows is 
   // returned. This should be 1 as long as the row exists.
   Future<int> delete(int id) async {

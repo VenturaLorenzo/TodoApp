@@ -14,7 +14,7 @@ class ActivityCreationPage extends StatefulWidget {
 
 class _ActivityCreationPageState extends State<ActivityCreationPage> {
   final _formKey = GlobalKey<FormState>();
-  Activity _activity= Activity("prova");
+  Activity _activity = Activity("prova");
 
   final dbHelper = DatabaseHelper.instance;
   //ActivityCreationPage(this._formKey);
@@ -45,10 +45,10 @@ class _ActivityCreationPageState extends State<ActivityCreationPage> {
             ),
             RaisedButton(
               onPressed: () {
-                final form =_formKey.currentState;
+                final form = _formKey.currentState;
                 if (form.validate()) {
                   //process data
-form.save();
+                  form.save();
                   dbHelper.insertActivity(_activity);
                   Navigator.pop(context);
                 }
