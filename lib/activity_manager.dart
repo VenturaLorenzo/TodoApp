@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/activity_creator.dart';
 import 'package:todo_app/activity_entity.dart';
 
 import 'activity.dart';
@@ -23,7 +24,7 @@ class _ActivityManagerState extends State<ActivityManager> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: <Widget>[
+    return Container(color: Theme.of(context).primaryColor, child: Stack( children: <Widget>[
       ListView(
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
@@ -42,10 +43,18 @@ class _ActivityManagerState extends State<ActivityManager> {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
+          RaisedButton(child:  Text("goto NEW"),onPressed: () async {
+          await  Navigator.push(context,MaterialPageRoute(builder: (context) => ActivityCreationPage()));
+            fetchActivities();
+          },),
           RaisedButton(
             child: Text("add new"),
             onPressed: () {
-              _insert(Activity("prova"));
+              dbHelper.insertActivity(Activity("prova"));
+              fetchActivities();
+              setState(() {
+                
+              });
             },
           ),
           RaisedButton(
@@ -56,7 +65,7 @@ class _ActivityManagerState extends State<ActivityManager> {
           )
         ],
       ))
-    ]);
+    ]));
   }
 
   // Button onPressed methods
@@ -66,7 +75,6 @@ class _ActivityManagerState extends State<ActivityManager> {
     Map<String, dynamic> row = {DatabaseHelper.columnName: activity.name};
     final id = await dbHelper.insert(row);
     print('inserted row id: $id');
-    fetchActivities();
   }
 
   void _query() async {

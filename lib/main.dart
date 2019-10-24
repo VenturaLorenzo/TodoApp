@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
             actions: <Widget>[Icon(Icons.ac_unit)],
           ),
           body: ActivityManager(),
+          //backgroundColor: Theme.of(context).primaryColor,
         ));
   }
 }

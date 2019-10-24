@@ -3,6 +3,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
+import 'package:todo_app/activity.dart';
 
 class DatabaseHelper {
   
@@ -85,4 +86,9 @@ class DatabaseHelper {
     Database db = await instance.database;
     return await db.delete(table, where: '$columnId = ?', whereArgs: [id]);
   }
+
+  Future<void> insertActivity(Activity activity) async {Map<String, dynamic> row = {DatabaseHelper.columnName: activity.name};
+    final id = await insert(row);
+    print('inserted row id: $id');
+    }
 }
