@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/activity_creator.dart';
-import 'package:todo_app/settings_page.dart';
 import 'themes.dart';
 import 'activity_manager.dart';
 import 'style.dart';

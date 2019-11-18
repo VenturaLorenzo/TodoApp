@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -7,14 +8,17 @@ import 'package:todo_app/activity.dart';
 
 class DatabaseHelper {
   
-  static final _databaseName = "MyDatabase.db";
-  static final _databaseVersion = 1;
+  static final _databaseName = "TodoDB.db";
+  static final _databaseVersion = 2;
 
-  static final table = 'my_table';
+  static final activity_table = 'Activity';
+  static final activity_log= 'ActivityLog';
   
   static final columnId = '_id';
   static final columnName = 'name';
   static final columnAge = 'age';
+  static final columnDate='date';
+  static final columnDone= 'done';
 
   // make this a singleton class
   DatabaseHelper._privateConstructor();
@@ -41,29 +45,31 @@ class DatabaseHelper {
   // SQL code to create the database table
   Future _onCreate(Database db, int version) async {
     await db.execute('''
-          CREATE TABLE $table (
+          CREATE TABLE $activity_table (
             $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
             $columnName TEXT NOT NULL
           )
           ''');
            await db.execute('''
-          CREATE TABLE ActivityLog (
-            Date TEXT PRIMARY KEY ,
-            Name TEXT NOT NULL,
-            Done BOOLEAN
+          CREATE TABLE $activity_log (
+            $columnDate TEXT PRIMARY KEY ,
+            $columnName TEXT NOT NULL,
+            $columnDone BOOLEAN
           )
           ''');
   }
   void saveToLog()async {
-    
+    final DateTime data= new  DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd  mm').format(data);
     final allAct= await queryAllRows();
-    allAct.forEach((f) =>insertActivityLog(f["name"], true));
+    allAct.forEach((f) =>insertActivityLog(formattedDate ,f["name"], true));
    
     }
 
    Future<int> insertIntoLog(Map<String, dynamic> row) async {
     Database db = await instance.database;
-    return await db.insert("ActivityLog", row);
+    await db.insert("ActivityLog", row);
+    print("going to insert in LOG " + row[columnName]);
   }
   // Helper methods
 
@@ -72,21 +78,25 @@ class DatabaseHelper {
   // inserted row.
   Future<int> insert(Map<String, dynamic> row) async {
     Database db = await instance.database;
-    return await db.insert(table, row);
+    return await db.insert(activity_table, row);
   }
 
   // All of the rows are returned as a list of maps, where each map is 
   // a key-value list of columns.
   Future<List<Map<String, dynamic>>> queryAllRows() async {
     Database db = await instance.database;
-    return await db.query(table);
+    return await db.query(activity_table);
+  }
+   Future<List<Map<String, dynamic>>> queryAllLog() async {
+    Database db = await instance.database;
+    return await db.query(activity_log);
   }
 
   // All of the methods (insert, query, update, delete) can also be done using
   // raw SQL commands. This method uses a raw query to give the row count.
   Future<int> queryRowCount() async {
     Database db = await instance.database;
-    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $table'));
+    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $activity_table'));
   }
 
   // We are assuming here that the id column in the map is set. The other 
@@ -94,25 +104,29 @@ class DatabaseHelper {
   Future<int> update(Map<String, dynamic> row) async {
     Database db = await instance.database;
     int id = row[columnId];
-    return await db.update(table, row, where: '$columnId = ?', whereArgs: [id]);
+    return await db.update(activity_table, row, where: '$columnId = ?', whereArgs: [id]);
   }
  Future<int> deleteAll() async {
     Database db = await instance.database;
-    return await db.delete(table);
+    return await db.delete(activity_table);
   }
-  // Deletes the row specified by the id. The number of affected rows is 
-  // returned. This should be 1 as long as the row exists.
+   Future<int> deleteLog() async {
+    Database db = await instance.database;
+    return await db.delete(activity_log);
+  }
   Future<int> delete(int id) async {
     Database db = await instance.database;
-    return await db.delete(table, where: '$columnId = ?', whereArgs: [id]);
+    return await db.delete(activity_table, where: '$columnId = ?', whereArgs: [id]);
   }
 
   Future<void> insertActivity(Activity activity) async {Map<String, dynamic> row = {DatabaseHelper.columnName: activity.name};
     final id = await insert(row);
     print('inserted row id: $id');
     }
-      Future<void> insertActivityLog(String nome, bool done) async {Map<String, dynamic> row = {"Date": DateTime.now(),"Name":nome,"Done":done};
+      Future<void> insertActivityLog(String data,String nome, bool done) 
+      async 
+      {Map<String, dynamic> row = {DatabaseHelper.columnDate: data,DatabaseHelper.columnName:nome,DatabaseHelper.columnDone:done};
     final id = await insertIntoLog(row);
-    print('inserted row id: $id');
+    print('inserted row $nome   with id: $id');
     }
 }

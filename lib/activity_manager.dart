@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/activity_creator.dart';
 import 'package:todo_app/activity_entity.dart';
+import 'package:todo_app/log_page.dart';
+import 'package:todo_app/log_page.dart';
 
 import 'activity.dart';
 import 'database_helper.dart';
@@ -27,18 +29,23 @@ class _ActivityManagerState extends State<ActivityManager> {
     return Scaffold(
           appBar: AppBar(
             textTheme: Theme.of(context).appBarTheme.textTheme,
-            title: Text("TODO app"),
-            centerTitle: true,
+            title: Text("TODO "),
+        //    centerTitle: true,
             elevation: 10,
             actions: <Widget>[
               IconButton(
-                icon: Icon(Icons.settings),
+                icon: Icon(Icons.access_time),
                 onPressed: () async {
-                      await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ActivityCreationPage()));
+
+  List<Map<String,dynamic>> logs= await dbHelper.queryAllLog();
+ Navigator.push(context, MaterialPageRoute(builder:  (context) => LogPage(logs)));
+},
+              ),IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: ()  {
+                       dbHelper.deleteAll();
                       fetchActivities();
+                      setState(() {});
                     },
               )
             ],
@@ -65,7 +72,7 @@ class _ActivityManagerState extends State<ActivityManager> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
-                 /* Container(margin: EdgeInsets.all(10),child:  FloatingActionButton(
+                  Container(margin: EdgeInsets.all(10),child:  FloatingActionButton(
                     child: Icon(Icons.add),
                     onPressed: () async {
                       await Navigator.push(
@@ -74,15 +81,17 @@ class _ActivityManagerState extends State<ActivityManager> {
                               builder: (context) => ActivityCreationPage()));
                       fetchActivities();
                     },
-                  ),),*/
-                   Container(margin: EdgeInsets.all(10),child:  FloatingActionButton(
-                    child: Icon(Icons.delete),
-                    onPressed: () {
-                      dbHelper.deleteAll();
-                      fetchActivities();
-                      setState(() {});
-                    },
-                  ))
+                  ),),
+Container(child: RaisedButton(child: Text("Save Log"),onPressed: (){
+
+  dbHelper.saveToLog();
+},))
+                  ,
+Container(child: RaisedButton(child: Text("Show Log"),onPressed: () async {
+
+  List<Map<String,dynamic>> logs= await dbHelper.queryAllLog();
+ Navigator.push(context, MaterialPageRoute(builder:  (context) => LogPage(logs)));
+},)),                   
                 ],
               ))
         ])),
