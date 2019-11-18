@@ -46,8 +46,25 @@ class DatabaseHelper {
             $columnName TEXT NOT NULL
           )
           ''');
+           await db.execute('''
+          CREATE TABLE ActivityLog (
+            Date TEXT PRIMARY KEY ,
+            Name TEXT NOT NULL,
+            Done BOOLEAN
+          )
+          ''');
   }
-  
+  void saveToLog()async {
+    
+    final allAct= await queryAllRows();
+    allAct.forEach((f) =>insertActivityLog(f["name"], true));
+   
+    }
+
+   Future<int> insertIntoLog(Map<String, dynamic> row) async {
+    Database db = await instance.database;
+    return await db.insert("ActivityLog", row);
+  }
   // Helper methods
 
   // Inserts a row in the database where each key in the Map is a column name
@@ -92,6 +109,10 @@ class DatabaseHelper {
 
   Future<void> insertActivity(Activity activity) async {Map<String, dynamic> row = {DatabaseHelper.columnName: activity.name};
     final id = await insert(row);
+    print('inserted row id: $id');
+    }
+      Future<void> insertActivityLog(String nome, bool done) async {Map<String, dynamic> row = {"Date": DateTime.now(),"Name":nome,"Done":done};
+    final id = await insertIntoLog(row);
     print('inserted row id: $id');
     }
 }

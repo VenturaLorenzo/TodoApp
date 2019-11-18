@@ -13,7 +13,7 @@ class ActivityEntity extends StatelessWidget {
     // TODO: implement build
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(width: 3.0, color: Theme.of(context).primaryColor),
+          border: Border.all(width: 3.0, color: Theme.of(context).accentColor),
           borderRadius: BorderRadius.all(Radius.circular(15.0)),
           color: Theme.of(context).accentColor,
           boxShadow: [
@@ -25,12 +25,12 @@ class ActivityEntity extends StatelessWidget {
           ]),
       child: Column(
         children: <Widget>[
-          Row(
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                _activity.getID().toString() + " name: " + _activity.name,
-                style: Theme.of(context).textTheme.body1,
-              ),
+              Container(margin: EdgeInsets.fromLTRB(10, 0, 0, 0),child: Text(
+                "ID "+_activity.getID().toString() + " NAME " + _activity.name,
+                style: Theme.of(context).textTheme.title,
+              )),
               Row(
                 children: <Widget>[
                   Icon(Icons.star),

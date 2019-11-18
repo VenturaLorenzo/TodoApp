@@ -24,7 +24,26 @@ class _ActivityManagerState extends State<ActivityManager> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
+          appBar: AppBar(
+            textTheme: Theme.of(context).appBarTheme.textTheme,
+            title: Text("TODO app"),
+            centerTitle: true,
+            elevation: 10,
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.settings),
+                onPressed: () async {
+                      await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ActivityCreationPage()));
+                      fetchActivities();
+                    },
+              )
+            ],
+          ),
+          body: Container(
         color: Theme.of(context).primaryColor,
         child: Stack(children: <Widget>[
           ListView(
@@ -35,7 +54,8 @@ class _ActivityManagerState extends State<ActivityManager> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: _activities
-                      .map((activity) => ActivityEntity(activity,() =>fetchActivities()))
+                      .map((activity) =>
+                          ActivityEntity(activity, () => fetchActivities()))
                       .toList(),
                 ),
               ]),
@@ -45,8 +65,8 @@ class _ActivityManagerState extends State<ActivityManager> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
-                  RaisedButton(
-                    child: Text("goto NEW"),
+                 /* Container(margin: EdgeInsets.all(10),child:  FloatingActionButton(
+                    child: Icon(Icons.add),
                     onPressed: () async {
                       await Navigator.push(
                           context,
@@ -54,26 +74,19 @@ class _ActivityManagerState extends State<ActivityManager> {
                               builder: (context) => ActivityCreationPage()));
                       fetchActivities();
                     },
-                  ),
-                  RaisedButton(
-                    child: Text("add new"),
-                    onPressed: () {
-                      dbHelper.insertActivity(Activity("prova"));
-                      fetchActivities();
-                      setState(() {});
-                    },
-                  ),
-                  RaisedButton(
-                    child: Text("Delete All"),
+                  ),),*/
+                   Container(margin: EdgeInsets.all(10),child:  FloatingActionButton(
+                    child: Icon(Icons.delete),
                     onPressed: () {
                       dbHelper.deleteAll();
                       fetchActivities();
                       setState(() {});
                     },
-                  )
+                  ))
                 ],
               ))
-        ]));
+        ])),
+        );
   }
 
   // Button onPressed methods
@@ -83,7 +96,7 @@ class _ActivityManagerState extends State<ActivityManager> {
     print('query all rows:');
     allRows.forEach((row) => print(row));
   }
-
+/*
   void _update() async {
     // row to update
     Map<String, dynamic> row = {
@@ -94,9 +107,7 @@ class _ActivityManagerState extends State<ActivityManager> {
     final rowsAffected = await dbHelper.update(row);
     print('updated $rowsAffected row(s)');
   }
-
-  
-
+*/
   Future<void> fetchActivities() async {
     final allRows = await dbHelper.queryAllRows();
     print('query all rows:');

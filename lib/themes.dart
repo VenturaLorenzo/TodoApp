@@ -12,8 +12,8 @@ static ThemeData buildNormalTheme(){
 
   return ThemeData(brightness: Brightness.light,primaryColor: Arancione,accentColor:ArancioneScuro,
           appBarTheme:
-              AppBarTheme(color: ArancioneScuro, textTheme: TextTheme(title: AppBarTextStyle)),
-          textTheme: TextTheme(body1: Body1TextStyle, title: TitleTextStyle),
+              AppBarTheme(color: ArancioneScuro, textTheme: TextTheme(title: AppBarTextStyleLight)),
+          textTheme: TextTheme(body1: Body1TextStyleLight, title: AppBarTextStyleLight),
           primarySwatch: Colors.orange,
         );
 
@@ -23,8 +23,8 @@ static ThemeData buildDarkTheme(){
 
   return ThemeData(brightness: Brightness.dark,primaryColor: ArancioneScuro,accentColor:Arancione,
           appBarTheme:
-              AppBarTheme(textTheme: TextTheme(title: AppBarTextStyle)),
-          textTheme: TextTheme(body1: Body1TextStyle, title: TitleTextStyle),
+              AppBarTheme(textTheme: TextTheme(title: AppBarTextStyleDark),color:Arancione ),
+          textTheme: TextTheme(body1: Body1TextStyleDark, title: AppBarTextStyleDark),
           primarySwatch: Colors.purple,
         );
 

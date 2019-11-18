@@ -11,7 +11,29 @@ const fontName = 'Montserrat';
 
 
 
-const AppBarTextStyle = TextStyle(
+const AppBarTextStyleLight = TextStyle(
+  fontFamily: fontName,
+  fontWeight: FontWeight.w300,
+  fontSize: Medium,
+  color: Colors.black,
+);
+
+
+const TitleTextStyleLight= TextStyle(
+  fontFamily: fontName,
+  fontWeight: FontWeight.w300,
+  fontSize: Large,
+  color: Colors.black,
+);
+const Body1TextStyleLight= TextStyle(
+  fontFamily: fontName,
+  fontWeight: FontWeight.w300,
+  fontSize: Small,
+  color: Colors.black,
+);
+
+
+const AppBarTextStyleDark = TextStyle(
   fontFamily: fontName,
   fontWeight: FontWeight.w300,
   fontSize: Medium,
@@ -19,13 +41,13 @@ const AppBarTextStyle = TextStyle(
 );
 
 
-const TitleTextStyle= TextStyle(
+const TitleTextStyleDark= TextStyle(
   fontFamily: fontName,
   fontWeight: FontWeight.w300,
   fontSize: Large,
   color: Colors.white,
 );
-const Body1TextStyle= TextStyle(
+const Body1TextStyleDark= TextStyle(
   fontFamily: fontName,
   fontWeight: FontWeight.w300,
   fontSize: Small,

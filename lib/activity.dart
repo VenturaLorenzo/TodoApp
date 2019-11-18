@@ -1,5 +1,6 @@
 class Activity {
   String name;
+  int stars;
   int _id;
 
   Activity(this.name);
