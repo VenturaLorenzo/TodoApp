@@ -6,7 +6,7 @@ import '../activity.dart';
 import 'bloc_provider.dart';
 
 
-class NotesBloc implements BlocBase {
+class ActivityBloc implements BlocBase {
     // Create a broadcast controller that allows this stream to be listened
     // to multiple times. This is the primary, if not only, type of stream you'll be using.
     final _notesController = StreamController<List<Activity>>.broadcast();
