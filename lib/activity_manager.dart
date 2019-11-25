@@ -5,7 +5,7 @@ import 'package:todo_app/log_page.dart';
 import 'package:todo_app/log_page.dart';
 
 import 'activity.dart';
-import 'database_helper.dart';
+import 'database/database_helper.dart';
 
 class ActivityManager extends StatefulWidget {
   @override
@@ -16,7 +16,7 @@ class ActivityManager extends StatefulWidget {
 
 class _ActivityManagerState extends State<ActivityManager> {
   List<Activity> _activities = [Activity("prova")];
-  final dbHelper = DatabaseHelper.instance;
+  final dbHelper = DatabaseHelper.db;
   @override
   void initState() {
     // TODO: implement initState

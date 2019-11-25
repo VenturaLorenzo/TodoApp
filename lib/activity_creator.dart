@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:todo_app/activity.dart';
-import 'package:todo_app/database_helper.dart';
+
+import 'database/database_helper.dart';
 
 class ActivityCreationPage extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _ActivityCreationPageState extends State<ActivityCreationPage> {
   final _formKey = GlobalKey<FormState>();
   Activity _activity = Activity("prova");
 
-  final dbHelper = DatabaseHelper.instance;
+  final dbHelper = DatabaseHelper.db;
   //ActivityCreationPage(this._formKey);
   @override
   Widget build(BuildContext context) {

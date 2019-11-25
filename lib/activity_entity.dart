@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/activity.dart';
-import 'package:todo_app/database_helper.dart';
+
+import 'database/database_helper.dart';
 
 class ActivityEntity extends StatelessWidget {
   final Activity _activity;
-  final dbHelper= DatabaseHelper.instance;
+  final dbHelper= DatabaseHelper.db;
   final VoidCallback onDelete;
 
   ActivityEntity(this._activity,this.onDelete);
