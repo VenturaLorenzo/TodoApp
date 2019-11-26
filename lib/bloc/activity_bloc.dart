@@ -15,13 +15,13 @@ class ActivityBloc implements BlocBase {
     StreamSink<List<Activity>> get _inNotes => _notesController.sink;
 
     // Output stream. This one will be used within our pages to display the notes.
-    Stream<List<Activity>> get notes => _notesController.stream;
+    Stream<List<Activity>> get activities => _notesController.stream;
 
     // Input stream for adding new notes. We'll call this from our pages.
     final _addNoteController = StreamController<Activity>.broadcast();
     StreamSink<Activity> get inAddNote => _addNoteController.sink;
 
-    NotesBloc() {
+    ActivityBloc() {
         // Retrieve all the notes on initialization
         getNotes();
 

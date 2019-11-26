@@ -9,7 +9,7 @@ import 'style.dart';
 void main() => runApp(MaterialApp(
     title: 'TODO app',
     // theme: ThemeGenerator.buildNormalTheme(),
-    home: MyApp()));
+    home: BlocProvider(bloc: ActivityBloc(),child : MyApp())));
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

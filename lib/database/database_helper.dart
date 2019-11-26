@@ -5,7 +5,7 @@ import 'package:todo_app/activity.dart';
 
 
 class DatabaseHelper {
-  List<Activity> _activities;
+  List<Activity> _activities=[Activity("prova 1")];
   DatabaseHelper._constructor();
 
   static final DatabaseHelper db = DatabaseHelper._constructor();

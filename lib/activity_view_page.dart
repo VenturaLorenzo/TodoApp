@@ -17,19 +17,41 @@ class ActivityViewPage extends StatefulWidget {
 }
 
 class _ActivityViewPageState extends State<ActivityViewPage> {
-ActivityBloc _bloc;
-
+  ActivityBloc _bloc;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-  BlocProvider.of<ActivityBloc>(context);
- }
+   _bloc= BlocProvider.of<ActivityBloc>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
-  return Column();
-  
+    return Column(
+          children:<Widget>[ Expanded(
+                      child: StreamBuilder<List<Activity>>(
+            stream: _bloc.activities,
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Activity>> snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data.length == 0) {
+                  return Text("no data");
+                }
+              List<Activity> acts = snapshot.data;
+              return ListView.builder(
+                  itemCount: acts.length,
+                  itemBuilder: (BuildContext context, int i) {
+                    Activity a = acts[i];
+
+                    return Text(a.name);
+                  },
+                );
+              }
+              return Text("bad");
+              
+            }),
+          )
+       , RaisedButton(onPressed: (){_bloc.inAddNote.add(Activity("prova"));},child: Icon(Icons.add),)
+       ]);
   }
 }
