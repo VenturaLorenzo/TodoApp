@@ -5,18 +5,20 @@ import 'package:todo_app/activity.dart';
 
 import 'database/database_helper.dart';
 
-class ActivityCreationPage extends StatefulWidget {
+class ActivityPage extends StatefulWidget {
+
+  ActivityPage(this._activity);
+  final Activity _activity;
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _ActivityCreationPageState();
+    return _ActivityPageState();
   }
 }
 
-class _ActivityCreationPageState extends State<ActivityCreationPage> {
+class _ActivityPageState extends State<ActivityPage> {
   final _formKey = GlobalKey<FormState>();
-  Activity _activity = Activity("prova");
-
+ 
   final dbHelper = DatabaseHelper.db;
   //ActivityCreationPage(this._formKey);
   @override
@@ -24,10 +26,10 @@ class _ActivityCreationPageState extends State<ActivityCreationPage> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("Activity Creation"),
+        title: Text("Activity "+widget._activity.name),
         centerTitle: true,
         elevation: 10,
-        actions: <Widget>[Icon(Icons.ac_unit)],
+        actions: <Widget>[],
       ),
       body: Form(
         key: _formKey,
@@ -42,7 +44,7 @@ class _ActivityCreationPageState extends State<ActivityCreationPage> {
                 }
                 return null;
               },
-              onSaved: (val) => setState(() => _activity.name = val),
+              onSaved: (val) => setState(() => widget._activity.name = val),
             ),
             RaisedButton(
               onPressed: () {
@@ -50,7 +52,7 @@ class _ActivityCreationPageState extends State<ActivityCreationPage> {
                 if (form.validate()) {
                   //process data
                   form.save();
-                  dbHelper.insertActivity(_activity);
+//                  dbHelper.insertActivity(_activity);
                   Navigator.pop(context);
                 }
               },
